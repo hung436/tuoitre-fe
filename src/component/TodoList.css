@@ -8,7 +8,7 @@
 
 .todo-list-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 20px;
 }
 
@@ -19,11 +19,13 @@
 
 .todo-list-button {
     flex-shrink: 0;
+    background-color: green;
 }
 
 .todo-list-search {
     width: 200px;
     margin-right: 10px;
+    margin-left: 10px;
 }
 
 .todo-list-sort,
@@ -34,6 +36,7 @@
 
 .todo-list-items {
     background-color: white;
+    cursor: pointer;
 }
 
 .todo-item {
@@ -41,6 +44,7 @@
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid lightgray;
+
 }
 
 .todo-item-done {
