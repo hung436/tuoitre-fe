@@ -8,20 +8,26 @@ import {
   CheckSquareOutlined,
   BorderOutlined,
 } from "@ant-design/icons";
+
 const TodoList = () => {
+  //
   const { todos, filter, search, sort } = useSelector((state) => state.todo);
   const [filteredAndSortedTodos, setFilteredAndSortedTodos] = useState([]);
   const [todoSelected, setTodoSelected] = useState();
+
+  //Delete
   const handleDeleteTodo = (id) => {
     dispatch(removeTodo({ id }));
   };
-
+  //Done
   const handleMarkDone = (id) => {
     dispatch(markDoneTodo({ id }));
   };
+  //Edit
   const handleEditTodo = (value) => {
-    console.log("hung", value);
     dispatch(editTodo({ id: todoSelected.id, value: value }));
+    setOpen(false);
+    setTodoSelected({});
   };
   useEffect(() => {
     filterAndSortTodos();
@@ -30,21 +36,21 @@ const TodoList = () => {
   const filterAndSortTodos = () => {
     let filteredTodos = [...todos].reverse();
 
-    // Filter todos based on selectedFilter
+    // Filter
     if (filter === "done") {
       filteredTodos = filteredTodos.filter((todo) => todo.isDone);
     } else if (filter === "undone") {
       filteredTodos = filteredTodos.filter((todo) => !todo.isDone);
     }
 
-    // Search todos based on searchValue
+    // Search
     if (search.trim() !== "") {
       filteredTodos = filteredTodos.filter((todo) =>
         todo.value.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    // Sort todos based on sortOrder
+    // Sort
     if (sort === "ascend") {
       filteredTodos.sort((a, b) => a.id - b.id);
     } else if (sort === "descend") {
@@ -53,6 +59,7 @@ const TodoList = () => {
 
     setFilteredAndSortedTodos(filteredTodos);
   };
+  //Modal
   const [open, setOpen] = useState(false);
   const handleOpenPopUp = (todo) => {
     setTodoSelected(todo);
@@ -71,6 +78,7 @@ const TodoList = () => {
         dataSource={filteredAndSortedTodos}
         renderItem={(todo, index) => (
           <List.Item
+            key={index}
             className={`todo-item ${todo.isDone ? "todo-item-done" : ""}`}
             onClick={() => handleOpenPopUp(todo)}
             actions={[
